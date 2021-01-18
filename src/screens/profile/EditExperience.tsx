@@ -34,7 +34,7 @@ const EditExperience = () => {
     const navigation = useHistory();
     const formikRef = useRef(null);
 
-    const {experience} = useSelector((state : ApplicationState) => state.profileReducers);
+    const {experience} = useSelector((state : ApplicationState) => state.profileEmployeeReducers);
 
     const onUpdateInfo = async (values : any) => {
         await dispatch(onUpdateProfile(values));
@@ -50,11 +50,9 @@ const EditExperience = () => {
         <div>
             <Formik initialValues={initialValues} onSubmit= {(values) => onUpdateInfo(values)} innerRef={formikRef} validationSchema={validationSchema}>
                 {
-                    ({values,touched,handleBlur,handleChange,handleSubmit,errors}) => {
-                        <>
-                            <CssBaseline>
-                                <div className={classes.paper}>
-                                <TextField variant="outlined"
+                    ({values,touched,handleBlur,handleChange,handleSubmit,errors}) => (
+                        <form>
+                                        <TextField variant="outlined"
                                     margin="normal"
                                     fullWidth
                                     id="name"
@@ -68,12 +66,17 @@ const EditExperience = () => {
                                     FormHelperTextProps={{
                                         className : classes.helperText
                                     }} />
-                                </div>
+                                </form>
+                    )
+                            
+                                
+                                
+                                
                                
-                            </CssBaseline>
-                        </>
-                    }
+                            
+                
                 }
+                
             </Formik>
         </div>
             

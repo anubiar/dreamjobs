@@ -13,10 +13,13 @@ import RegisterScreen from "../screens/auth/RegisterScreen";
 import PageNotFound from "../screens/pageNotFound/PageNotFound";
 import Footer from "../components/footer/Footer";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import CreateEmployerProfile from "../components/profile/createEmployerProfile";
 
 
 const Navigation = ({history} : any) => {
     const {isLogged} = useSelector((state: ApplicationState) => state.authReducer);
+    const {existEmployerProfile} = useSelector((state : ApplicationState) => state.profileEmployerReducers);
+    const {existEmployeeProfile} = useSelector((state : ApplicationState) => state.profileEmployeeReducers);
     return (
         <Router history={history}>
             <Switch>
@@ -52,38 +55,43 @@ const Navigation = ({history} : any) => {
                         )
                         }/>
 
-                        <Route exact path={"/profileempy/edit"}>
+                        <Route exact path={"/profileempy/edit"} render={() => (
+                            <>
                             <NavBar/>
                             <Route component={ProfileScreen}/>
                             <Footer/>
-                        </Route>
-
-                        
-
-                        {/* <Route exact path={'/profile'} render={()=>(
+                            </>
+                        )}/>
+                            
+                        <Route exact path={"/createHireProfile"} render={() => (
+                            existEmployerProfile
+                            ?
+                            <Redirect to={'/'}/>
+                            :
                             <>
                                 <NavBar/>
-                                <Route component={}/>
+                                <Route component={CreateEmployerProfile}/>
                                 <Footer/>
-                            </>)}
-                        /> */}
+                            </>
+                        )}/>
 
-                        {/* <Route exact path={'/profile/edit'} render={()=>(
+                        {/* <Route exact path={'creteJobProfile'} render={()=>(
+                            existEmployeeProfile
+                            ?
+                            <Redirect to={'/'}/>
+                            :
                             <>
                                 <NavBar/>
-                                <Route component={EditProfile}/>
-                                <Footer/>
-                            </>)}
-                        /> */}
-
-                        
-                        {/* <Route path={'/profile'} render={() => (
-                            <>
-                                <NavBar/>
-                                <ProfileForeignScreen/>
+                                <Route component={CreateEmployeeProfile}/>
                                 <Footer/>
                             </>
                         )}/> */}
+
+                        
+
+                        
+
+                        
                         <Route path={'/*'} component={PageNotFound}/>
                     </Switch>
                 }
@@ -94,3 +102,5 @@ const Navigation = ({history} : any) => {
 }
 
 export default Navigation
+
+

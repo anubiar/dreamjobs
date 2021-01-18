@@ -8,6 +8,10 @@ import { onGetPositionsMain } from "../../redux/actions/positionActions";
 import { Color } from "../../config/Colors";
 import PositionItem from "../../components/vacantPosition/positionItem";
 import EditProfile from "../profile/EditProfile";
+import { Container, Grid } from "@material-ui/core";
+import PositionItemList from "../../components/vacantPosition/positionItemList";
+import { onExistEmployerProfile } from "../../redux/actions/profileEmployerActions";
+import { onExistEmployeeProfile } from "../../redux/actions/profileEmployeeActions";
 
 
 const Main = () => {
@@ -18,7 +22,9 @@ const Main = () => {
     
 
     useEffect(() => {
-        dispatch(onGetPositionsMain())
+        dispatch(onGetPositionsMain());
+        dispatch(onExistEmployerProfile());
+        dispatch(onExistEmployeeProfile());
     },[])
 
     return (
@@ -29,27 +35,15 @@ const Main = () => {
                 </div>
                 :
                 <div>
-                    
-                    {
-                        
-                        PositionsMain.map((position : any) => {
-                            console.log(position);
-                            console.log(PositionsMain);
-                            return(
-                                <PositionItem
-                                key={position.vacantPositionId.toString()}
-                                salary={position.salary}
-                                positionName = {position.positionName}
-                                country = {position.country}
-                                tags = {position.tags}
+                    <main>
+                        <PositionItemList positionItems={PositionsMain}/>                    
+                    </main>
 
-                                />
-                            )
-                        })
-                    }
+                    
+                    
                    
                     
-                    <EditProfile/>
+                    
                 </div>
                 
 

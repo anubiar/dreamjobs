@@ -1,7 +1,7 @@
 import { string } from "yup/lib/locale";
-import {ProfileActions} from "../actions/profileEmployeeActions";
+import {EmployeeProfileActions} from "../actions/profileEmployeeActions";
 
-type ProfileState = {
+type EmployeeProfileState = {
     inProgress : boolean,
     id : number | undefined,
     email: string,
@@ -15,7 +15,8 @@ type ProfileState = {
     languages : any[],
     education : any,
     experience : any,
-    skills : any[]
+    skills : any[],
+    existEmployeeProfile : boolean
 }
 
 const initialState = {
@@ -32,24 +33,25 @@ const initialState = {
     languages : [],
     education : undefined,
     experience : undefined,
-    skills : []
+    skills : [],
+    existEmployeeProfile : false
 }
 
-const ProfileEmployeeReducer = (state : ProfileState = initialState,action : ProfileActions) =>{
+const ProfileEmployeeReducer = (state : EmployeeProfileState = initialState,action : EmployeeProfileActions) =>{
     switch (action.type) {
-        case "SET_PROFILE_IN_PROGRESS":
+        case "SET_EMPLOYEE_PROFILE_IN_PROGRESS":
             return {
                 ...state,
                 inProgress:action.payload
             }
-        case "GET_PROFILE_DATA":
+        case "GET_EMPLOYEE_PROFILE_DATA":
             return {
                 ...state,
                 email:action.payload.email,
                 id : action.payload.id,
                 name : action.payload.name,
-                lastName :action.payload.lastname,
-                adress : action.payload.lastname,
+                lastName :action.payload.lastName,
+                adress : action.payload.adress,
                 phone : action.payload.phone,
                 imagePath : action.payload.imagePath,
                 birthDate : action.payload.birthDate,
@@ -58,7 +60,11 @@ const ProfileEmployeeReducer = (state : ProfileState = initialState,action : Pro
                 skills : action.payload.skills,
                 languages : action.payload.languages
             }
-        
+        case "SET_EXIST_EMPLOYEE_PROFILE":
+            return{
+                ...state,
+                existEmployeeProfile: action.payload
+            }
 
         default:
             return state

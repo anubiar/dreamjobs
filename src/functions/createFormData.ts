@@ -1,15 +1,15 @@
 
-export const createUpdateEmployerProfileFormData = ({nume,compania,codFiscal,companyNumber,companyAdress,formId,imagePath} : any) => {
+export const createUpdateEmployerProfileFormData = ({companyRepresentant,companyName,fiscalCode,companyNumber,companyAdress,typeId,imagePath} : any) => {
     const formData = new FormData();
-    formData.append('nume',nume);
-    formData.append('compania',compania);
-    formData.append('codfiscal',codFiscal);
-    formData.append('companyNumber',companyNumber);
-    formData.append('companyAdress',companyAdress);
-    formData.append('formId',formId);
+    formData.append('nume',companyRepresentant);
+    formData.append('compania',companyName);
+    formData.append('codfiscal',fiscalCode);
+    formData.append('companynumber',companyNumber);
+    formData.append('companyadress',companyAdress);
+    formData.append('formid',typeId);
     if(imagePath) {
-        console.log('ImagePath')
-        formData.append('imagePath', imagePath[0])
+        console.log('image')
+        formData.append('image', imagePath[0])
     }
     return formData
 }

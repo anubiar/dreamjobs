@@ -5,12 +5,14 @@ import {ProfileEmployeeReducer} from "./profileEmployeeReducers";
 import storage from "redux-persist/lib/storage";
 import {GeneralReducer} from "./generalReducers";
 import { PositionReducer } from "./positionReducer";
+import { ProfileEmployerReducer } from "./profileEmployerReducers";
 
 
 const appReducer  = combineReducers({
     authReducer : AuthReducer,
     generalReducers : GeneralReducer,
-    profileReducers:ProfileEmployeeReducer,
+    profileEmployeeReducers:ProfileEmployeeReducer,
+    profileEmployerReducers : ProfileEmployerReducer,
     positionReducer : PositionReducer,
     routing:routerReducer,
 })

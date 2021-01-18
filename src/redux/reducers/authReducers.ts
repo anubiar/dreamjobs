@@ -48,7 +48,7 @@ const AuthReducer = (state : AuthState = initialState,action : AuthActions) => {
         case "ON_REGISTER":
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
                 isLogged: true,
             }
         case "ON_ERROR_REGISTER":

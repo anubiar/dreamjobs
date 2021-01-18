@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { useDispatch } from "react-redux";
-import { onGetProfileData } from "../../redux/actions/profileEmployeeActions";
+import { onGetEmployeeProfileData } from "../../redux/actions/profileEmployeeActions";
 import PositionItem from "../../components/vacantPosition/positionItem";
 
 interface TabPanelProps {
@@ -52,7 +52,7 @@ const ProfileScreen = () => {
   };
 
   useEffect(() => {
-    dispatch(onGetProfileData())
+    dispatch(onGetEmployeeProfileData())
 },[])
 
   return (
@@ -73,8 +73,7 @@ const ProfileScreen = () => {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        {/* <EditProfile /> */}
-        <h1>Edit</h1>
+        <EditProfile />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <EditExperience />
@@ -99,8 +98,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     width: undefined,
     height: undefined,
-    marginTop: 100,
-    marginBottom: 100
+    marginTop:100,
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,

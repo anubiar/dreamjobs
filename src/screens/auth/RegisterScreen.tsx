@@ -19,15 +19,14 @@ import Box from "@material-ui/core/Box";
 // @ts-ignore
 import { Bounce } from 'react-activity';
 import {onRegister} from "../../redux/actions/authActions";
+import { useHistory } from "react-router";
 
 
 
 const initFormValue = {
     email: '',
-    username : '',
     password: '',
-    name: '',
-    phone: '',
+    username: ''
 }
 const validationSchema = yup.object().shape({
     email: yup.string()
@@ -38,19 +37,9 @@ const validationSchema = yup.object().shape({
         .label('Password')
         .required('Please enter your password')
         .min(4, 'Password must have at least 4 characters '),
-    username : yup.string()
-        .label('username')
-        .required('Please enter an username')
-        .min(4,'Name must have at least 4 characters'),
-    name: yup.string()
-        .label('name')
-        .required()
-        .min(4),
-    phone: yup.string()
-        .label('phone')
-        .required('Please enter your phone number')
-        .min(7)
-        .max(20)
+    username: yup.string()
+    .required("User name required")
+    .min(3,"min 3 characters")
 });
 
 const RegisterScreen = () => {
@@ -58,9 +47,10 @@ const RegisterScreen = () => {
     const classes = useStyles();
     const {inProgress,errorRegister} = useSelector((state: ApplicationState) => state.authReducer);
     const formikRef = useRef(null);
+    const navigation = useHistory();
 
     const onSignUp= (values : any) => {
-        dispatch(onRegister(values))
+        dispatch(onRegister(values));
     }
     return (
         <Container component="main" maxWidth="xs">
@@ -95,7 +85,7 @@ const RegisterScreen = () => {
                                     id="email"
                                     label="Email Address"
                                     name="email"
-                                    autoComplete="email"
+                                    autoComplete="username"
                                     autoFocus
                                     value={values.email}
                                     onChange={handleChange}
@@ -109,19 +99,19 @@ const RegisterScreen = () => {
                                     variant="outlined"
                                     margin="normal"
                                     fullWidth
-                                    name="username"
-                                    label="username"
-                                    type="username"
                                     id="username"
-                                    autoComplete="name"
+                                    label="User Name"
+                                    name="username"
+                                    autoFocus
                                     value={values.username}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    helperText={(errors.username&&touched.username) && errors.username}
+                                    helperText={(errors.username && touched.username) && errors.username}
                                     FormHelperTextProps={{
                                         className : classes.helperText
                                     }}
                                 />
+
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -139,40 +129,8 @@ const RegisterScreen = () => {
                                         className : classes.helperText
                                     }}
                                 />
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    name="name"
-                                    label="name"
-                                    type="name"
-                                    id="name"
-                                    autoComplete="current-name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    helperText={(errors.name&&touched.name) && errors.name}
-                                    FormHelperTextProps={{
-                                        className : classes.helperText
-                                    }}
-                                />
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    name="phone"
-                                    label="phone"
-                                    type="number"
-                                    id="phone"
-                                    autoComplete="current-phone"
-                                    value={values.phone}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    helperText={(errors.phone&&touched.phone) && errors.phone}
-                                    FormHelperTextProps={{
-                                        className : classes.helperText
-                                    }}
-                                />
+                                
+                                
                                 <FormControlLabel
                                     control={<Checkbox value="remember" color="primary" />}
                                     label="Remember me"

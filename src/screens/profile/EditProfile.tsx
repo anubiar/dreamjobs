@@ -1,11 +1,11 @@
-import React,{useRef} from 'react';
+import React,{useEffect, useRef} from 'react';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Button, Container, CssBaseline, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Container, CssBaseline, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { ApplicationState } from '../../redux/reducers';
-import { onUpdateProfile } from '../../redux/actions/profileEmployeeActions';
+import { onGetEmployeeProfileData, onUpdateProfile } from '../../redux/actions/profileEmployeeActions';
 
 //@ts-ignore
 import { Bounce } from 'react-activity';
@@ -15,7 +15,7 @@ import { DropzoneArea } from 'material-ui-dropzone';
 const validationSchema = yup.object().shape({
     lastName: yup.string()
         .label('lastName')
-        .required('Please enter name ')
+        .required('Please enter last name ')
         .min(3, 'Last Name must be at least 3 characters')
         .max(20,'Last Name must be at most 20 characters'),
     birthDate: yup.date()
@@ -50,8 +50,10 @@ const EditProfile = () => {
     const navigation = useHistory();
     const formikRef = useRef<any>(null);
 
-    
-    const {name,email,phone,lastName,birthDate,gender,adress,inProgress,imagePath} = useSelector((state:ApplicationState) => state.profileReducers)
+    useEffect(() => {
+        dispatch(onGetEmployeeProfileData())
+    },[])  
+    const {name,email,phone,lastName,birthDate,gender,adress,inProgress,imagePath} = useSelector((state:ApplicationState) => state.profileEmployeeReducers);
     
     const initialFormValue = {
         name,
@@ -69,7 +71,7 @@ const EditProfile = () => {
         navigation.replace('/profile')
     }
     return(
-        <Container component="div" style={{marginTop:100}}>
+        <Container component="div" maxWidth="lg">
             <Formik innerRef={formikRef}
             initialValues = {initialFormValue}
             validationSchema = {validationSchema}
@@ -77,7 +79,7 @@ const EditProfile = () => {
             
             >
                 {
-                    ({values,touched,errors,handleChange,handleBlur,handleSubmit}) => {
+                    ({values,touched,errors,handleChange,handleBlur,handleSubmit}) => (
 
                         <>
                         <CssBaseline/>
@@ -86,7 +88,9 @@ const EditProfile = () => {
                                 Edit Profile
                             </Typography>
                             <form className={classes.form} onSubmit={handleSubmit}>
-                                <TextField
+                                <Grid xs={3} sm={4} md={6} lg={12}>
+                                    <Grid item xs>
+                                    <TextField
                                     variant="outlined"
                                     margin="normal"
                                     fullWidth
@@ -103,7 +107,9 @@ const EditProfile = () => {
                                     }}
                                     contentEditable = {false}
                                 />
-                                <TextField
+                                    </Grid>
+                                <Grid item xs> 
+                                    <TextField
                                     variant="outlined"
                                     margin="normal"
                                     fullWidth
@@ -119,7 +125,8 @@ const EditProfile = () => {
                                     FormHelperTextProps={{
                                         className : classes.helperText
                                     }}
-                                />
+                                /></Grid>
+                               
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -164,10 +171,12 @@ const EditProfile = () => {
                                         }
                                     </div>
                                 </Button>
+                                </Grid>
+                                
                             </form>
                         </div>
                     </>
-                    }
+                    )
                 }
             </Formik>
         </Container>

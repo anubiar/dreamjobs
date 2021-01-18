@@ -3,11 +3,11 @@ import {PositionActions} from '../actions/positionActions';
 
 type PositionState = {
     inProgress : boolean,
-    search : string,
-
+    
     inProgressPositionsMain : boolean,
     PositionsMain : any[],
 
+    search : string,
     positionsSearch : any[],
     inProgressPositionSearch : boolean
 }
