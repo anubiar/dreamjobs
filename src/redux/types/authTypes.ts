@@ -6,7 +6,5 @@ export type LoginModel = {
 export type RegisterModel = {
     email : string,
     username : string,
-    password : string,
-    name : string,
-    phone : string,
+    password : string
 }

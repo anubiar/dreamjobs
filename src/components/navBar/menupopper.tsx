@@ -123,6 +123,11 @@ const MenuListComposition = () => {
                           <Link href={"/profileempy/edit"}>Edit Profile</Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>My Jobs</MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link href={"/addJob"}>
+                            Add Job
+                          </Link>
+                        </MenuItem>
                         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                       </>
                     ) : null}

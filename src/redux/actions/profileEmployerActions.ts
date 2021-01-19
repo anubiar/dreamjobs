@@ -19,11 +19,23 @@ export interface setExistEmployerProfile{
     payload: boolean
 }
 
+export interface setLoadingProfileImage{
+    readonly type: 'SET_LOADING_PROFILE_IMAGE',
+    payload: boolean
+}
+
+export interface getEmployerProfileImage{
+    readonly type: "GET_EMPLOYER_PROFILE_IMAGE",
+    payload: any
+}
+
 
 export type EmployerProfileActions =
     |getEmployerProfileData
     |setEmployerProfileInProgress
     |setExistEmployerProfile
+    |setLoadingProfileImage
+    |getEmployerProfileImage
 
 
 
@@ -66,6 +78,23 @@ export const onUpdateEmployerProfile = (values : any) => {
         }
         finally{
             setTimeout(() => dispatch({type:"SET_EMPLOYER_PROFILE_IN_PROGRESS",payload:false}),1500);
+        }
+    }
+
+
+}
+
+export const onGetEmployerImageProfile = (imagePath : any) => {
+    return async(dispatch : Dispatch<EmployerProfileActions>) => {
+        try {
+            dispatch({type:"SET_LOADING_PROFILE_IMAGE",payload:true});
+            const response = await ApiService.get(`profile/image/${imagePath}`,{});
+
+        } catch (e) {
+            console.log(e);
+        }
+        finally{
+            setTimeout(() => dispatch({type: "SET_LOADING_PROFILE_IMAGE",payload: false}),1500);
         }
     }
 }

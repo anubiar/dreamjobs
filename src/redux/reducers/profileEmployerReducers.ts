@@ -4,6 +4,7 @@ import {EmployerProfileActions} from '../actions/profileEmployerActions';
 
 type EmployerProfileState = {
     inProgress: boolean,
+    inProgressProfileImage: boolean,
     nameCompany : string,
     id: number,
     email : string,
@@ -12,7 +13,8 @@ type EmployerProfileState = {
     fiscalCode : string,
     positions : any[],
     imagePath : string | undefined,
-    existEmployerProfile : boolean
+    existEmployerProfile : boolean,
+    profileImage: any
 }
 
 const initialState ={
@@ -25,7 +27,9 @@ const initialState ={
     fiscalCode: '',
     imagePath: undefined,
     positions: [],
-    existEmployerProfile: false
+    existEmployerProfile: false,
+    inProgressProfileImage : false,
+    profileImage: undefined
 }
 
 const ProfileEmployerReducer = (state : EmployerProfileState = initialState,action : EmployerProfileActions) =>{
@@ -33,13 +37,13 @@ const ProfileEmployerReducer = (state : EmployerProfileState = initialState,acti
         case "GET_EMPLOYER_PROFILE_DATA":
             return{
                 ...state,
-                nameCompany: action.payload.nameCompany,
-                id: action.payload.id,
-                email: action.payload.email,
-                companyAdress: action.payload.companyAdress,
-                companyPhone: action.payload.companyPhone,
-                fiscalCode: action.payload.fiscalCode,
-                imagePath: action.payload.imagePath
+                nameCompany: action.payload.profile.compania,
+                id: action.payload.profile.employerProfileId,
+                // email: action.payload.email,
+                companyAdress: action.payload.profile.companyAdress,
+                companyPhone: action.payload.profile.companyPhone,
+                fiscalCode: action.payload.profile.codFiscal,
+                imagePath: action.payload.profile.imagePath
             }
         case  "SET_EMPLOYER_PROFILE_IN_PROGRESS":
             return{
@@ -52,6 +56,17 @@ const ProfileEmployerReducer = (state : EmployerProfileState = initialState,acti
                 ...state,
                 existEmployerProfile: action.payload
             }
+        case "SET_LOADING_PROFILE_IMAGE":
+            return{
+                ...state,
+                inProgressProfileImage: action.payload
+            }
+        case "GET_EMPLOYER_PROFILE_IMAGE":
+            return{
+                ...state,
+                profileImage: action.payload
+            }
+        
         default:
             return{
                 ...state

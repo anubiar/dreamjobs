@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { AccountCircle, Add, Home, Search } from "@material-ui/icons";
 import {
@@ -14,11 +14,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ApplicationState } from "../../redux/reducers";
 import MenuListComposition from "./menupopper";
+import { onExistEmployeeProfile } from "../../redux/actions/profileEmployeeActions";
+import { onExistEmployerProfile } from "../../redux/actions/profileEmployerActions";
 
 enum routerEnum {
   main = "/",
-  jobProfile = "/jobProfile",
-  hireProfile = "/hireProfile",
+  jobProfile = "/createJobProfile",
+  hireProfile = "/createHireProfile",
 }
 
 const NavBar = () => {
@@ -27,6 +29,7 @@ const NavBar = () => {
   const location = useLocation();
   const { pathname } = location;
   const navigation = useHistory();
+  
   const { existEmployeeProfile } = useSelector(
     (state: ApplicationState) => state.profileEmployeeReducers
   );
@@ -34,7 +37,7 @@ const NavBar = () => {
     (state: ApplicationState) => state.profileEmployerReducers
   );
 
-
+  
 
   const keyPress = (e: any) => {
     if (e.keyCode == 13) navigation.replace("/products");
@@ -77,7 +80,7 @@ const NavBar = () => {
               />
             </IconButton>
           </Link>
-            {
+            {/* {
                 !existEmployerProfile && <Link href={"/createHireProfile"}>
                 <IconButton>
                   <AccountCircle
@@ -103,6 +106,56 @@ const NavBar = () => {
                   />
                 </IconButton>
               </Link>
+            } */}
+
+            {
+              !existEmployerProfile
+              ?
+              (
+                !existEmployeeProfile
+                ?
+                <Link href={"/createHireProfile"}>
+                <IconButton>
+                  <AccountCircle
+                    className={
+                      pathname.includes(routerEnum.hireProfile)
+                        ? classes.selectedNavIcon
+                        : undefined
+                    }
+                  />
+                </IconButton>
+                </Link>
+                :
+                null
+              )
+              :
+              null
+                
+              
+            }
+
+            {
+              !existEmployeeProfile
+              ?
+              (
+                !existEmployerProfile
+                ?
+                <Link href={"/createJobProfile"}>
+                <IconButton>
+                  <AccountCircle
+                    className={
+                      pathname.includes(routerEnum.jobProfile)
+                        ? classes.selectedNavIcon
+                        : undefined
+                    }
+                  />
+                </IconButton>
+                </Link>
+                :
+                null
+              )
+              :
+              null
             }
         
           
@@ -111,7 +164,7 @@ const NavBar = () => {
         
           
 
-          <MenuListComposition />
+            <MenuListComposition />
         </Toolbar>
       </AppBar>
     </div>

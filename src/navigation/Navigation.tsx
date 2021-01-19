@@ -14,6 +14,7 @@ import PageNotFound from "../screens/pageNotFound/PageNotFound";
 import Footer from "../components/footer/Footer";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreateEmployerProfile from "../components/profile/createEmployerProfile";
+import { PostVacantPositionForm } from "../components/vacantPosition/positionItemCreate";
 
 
 const Navigation = ({history} : any) => {
@@ -74,6 +75,21 @@ const Navigation = ({history} : any) => {
                                 <Footer/>
                             </>
                         )}/>
+
+
+                        <Route exact path={"/addJob"} render={
+                            () => (
+                                existEmployerProfile
+                                ?
+                                <Redirect to={'/createHireProfile'}/>
+                                :
+                                <>
+                                <NavBar/>
+                                <Route component={PostVacantPositionForm}/>
+                                <Footer/>
+                                </>
+                            )
+                        }/>
 
                         {/* <Route exact path={'creteJobProfile'} render={()=>(
                             existEmployeeProfile

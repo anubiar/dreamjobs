@@ -22,7 +22,7 @@ const initialValues = {
         imagePath: []
 }
 const validationSchema = yup.object().shape({
-    companyNume: yup.string()
+    companyName: yup.string()
     .label("companyName")
     .required("Please give the name of your company")
     .min(5,"Company name must be at least 5")
@@ -43,9 +43,9 @@ const validationSchema = yup.object().shape({
     .max(13,"13 character"),
     companyRepresentant: yup.string()
     .label("companyRepresentant"),
-    // typeId: yup.string()
-    // .label("typeId")
-    // .required("Please select company type"),
+    typeId: yup.string()
+    .label("typeId")
+    .required("Please select company type"),
     imagePath : yup.array()
         .label('imagePath')
         .max(1,'No more than 1 image'),
@@ -57,6 +57,7 @@ const CreateEmployerProfile = () => {
     const classes = useStyles();
     const navigation = useHistory();
     const onCreateEmployerProfile = async (values : any) => {
+        console.log(values);
         await dispatch(onUpdateEmployerProfile(values));
         console.log(values);
         navigation.replace("/");
