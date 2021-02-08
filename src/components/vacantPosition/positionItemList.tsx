@@ -13,10 +13,10 @@ const classes = useStyles();
 
 
     return (
-        <Container maxWidth="md" style={{marginTop: 100}}>
+        <Container maxWidth="md" className={classes.container}>
             <Grid container spacing={4} justify="space-around">
                 {
-                    positionItems.map((card : any) => <PositionItem card={card}/>)
+                    positionItems.map((card : any) => <PositionItem key={card.vacantPositionId.toString()} card={card}/>)
                 }
             </Grid>
         </Container>
@@ -25,7 +25,10 @@ const classes = useStyles();
 
 
 const useStyles = makeStyles((theme) => ({
-
+    container:{
+        marginTop: 100,
+        marginBottom: 100
+    }
 }))
 
 export default PositionItemList;

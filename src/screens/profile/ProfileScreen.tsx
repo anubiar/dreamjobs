@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import { useDispatch } from "react-redux";
 import { onGetEmployeeProfileData } from "../../redux/actions/profileEmployeeActions";
 import PositionItem from "../../components/vacantPosition/positionItem";
+import { EditEducation } from "./EditEducation";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -79,7 +80,7 @@ const ProfileScreen = () => {
         <EditExperience />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <PositionItem/>
+        <EditEducation />
       </TabPanel>
       <TabPanel value={value} index={3}>
         Edit Languages

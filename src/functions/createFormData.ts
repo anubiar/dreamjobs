@@ -14,7 +14,7 @@ export const createUpdateEmployerProfileFormData = ({companyRepresentant,company
     return formData
 }
 
-export const createUpdateEmployeeProfileFormData = ({name,userName,phone,imagePath,lastName,birthDate,adress,genderId} : any) => {
+export const createUpdateEmployeeProfileFormData = ({name,userName,phone,imagePath,lastName,birthDate,adress,genderId,education,experience} : any) => {
     const formData = new FormData();
     formData.append('name',name);
     formData.append('username',userName);
@@ -23,6 +23,8 @@ export const createUpdateEmployeeProfileFormData = ({name,userName,phone,imagePa
     formData.append('birthdate',birthDate);
     formData.append('adress',adress);
     formData.append('genderid',genderId);
+    formData.append('education',education);
+    formData.append('experience',experience);
     if(imagePath) {
         console.log('ImagePath')
         formData.append('imagePath', imagePath[0])

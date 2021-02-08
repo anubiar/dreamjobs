@@ -12,6 +12,7 @@ import { onLogout } from "../../redux/actions/generalActions";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../redux/reducers";
 import { useHistory } from "react-router";
+import { ExitToApp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +41,6 @@ const MenuListComposition = () => {
 
   const handleLogOut = () => {
     dispatch(onLogout());
-    navigation.replace("/");
   };
 
   const handleToggle = () => {
@@ -114,24 +114,34 @@ const MenuListComposition = () => {
                           <Link href={"/profileempy/edit"}>Edit Profile</Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>My Apliances</MenuItem>
-                        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                       </>
                     ) : null}
                     {existEmployerProfile ? (
-                      <>
-                        <MenuItem onClick={handleClose}>
-                          <Link href={"/profileempy/edit"}>Edit Profile</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>My Jobs</MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Link href={"/addJob"}>
-                            Add Job
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                      </>
+                      <div>
+                         <MenuItem onClick={handleClose}>
+                        <Link href={"/profileempy/edit"}>Edit Profile</Link>
+                      </MenuItem>
+                      
+                      <MenuItem onClick={handleClose}>
+                        <Link href={"/myJobs"}>
+                        My Jobs 
+                        </Link>
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Link href={"/addJob"}>
+                          Add Job
+                        </Link>
+                      </MenuItem>
+                      </div>
+                       
+                      
+                        
+                      
                     ) : null}
-                    <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                    <MenuItem onClick={handleLogOut}>
+                      <ExitToApp/>
+                      Logout
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

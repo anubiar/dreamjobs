@@ -5,7 +5,10 @@ import ApiService from '../../services/api'
 
 export interface getEmployerProfileData{
     readonly type : 'GET_EMPLOYER_PROFILE_DATA',
-    payload : any
+    payload : {
+        profile: any,
+        positions: any[]
+    }
 }
 
 
@@ -19,14 +22,17 @@ export interface setExistEmployerProfile{
     payload: boolean
 }
 
-export interface setLoadingProfileImage{
-    readonly type: 'SET_LOADING_PROFILE_IMAGE',
-    payload: boolean
+export interface setDeletePositionInProgress{
+    readonly type: 'SET_DELETE_POSITION_IN_PROGRESS',
+    payload:{
+        inProgress:boolean,
+        id : number | undefined
+    }
 }
 
-export interface getEmployerProfileImage{
-    readonly type: "GET_EMPLOYER_PROFILE_IMAGE",
-    payload: any
+export interface setNewProfilePositions{
+    readonly type: 'SET_NEW_PROFILE_POSITIONS',
+    payload: number
 }
 
 
@@ -34,8 +40,8 @@ export type EmployerProfileActions =
     |getEmployerProfileData
     |setEmployerProfileInProgress
     |setExistEmployerProfile
-    |setLoadingProfileImage
-    |getEmployerProfileImage
+    |setDeletePositionInProgress
+    |setNewProfilePositions
 
 
 
@@ -43,8 +49,10 @@ export const onGetEmployerProfileData = () =>{
     return async (dispatch : Dispatch<EmployerProfileActions>) => {
         try {
             dispatch({type: 'SET_EMPLOYER_PROFILE_IN_PROGRESS',payload:true});
-            const response = await ApiService.get('profile/employer',{});
-            setTimeout(() => dispatch({type: 'GET_EMPLOYER_PROFILE_DATA',payload:response}),1500);
+            const profile = await ApiService.get('profile/employer',{});
+            const positions = await ApiService.get('vacantposition/current',{});
+            console.log(positions);
+            setTimeout(() => dispatch({type: 'GET_EMPLOYER_PROFILE_DATA',payload:{profile: profile.profile,positions: positions.positions}}),1500);
         } catch (e) {
             console.log(e);
         }
@@ -84,17 +92,19 @@ export const onUpdateEmployerProfile = (values : any) => {
 
 }
 
-export const onGetEmployerImageProfile = (imagePath : any) => {
-    return async(dispatch : Dispatch<EmployerProfileActions>) => {
+export const onDeletePosition = (id : number) => {
+    return async (dispatch : Dispatch<EmployerProfileActions>) => {
         try {
-            dispatch({type:"SET_LOADING_PROFILE_IMAGE",payload:true});
-            const response = await ApiService.get(`profile/image/${imagePath}`,{});
-
+            dispatch({type:"SET_DELETE_POSITION_IN_PROGRESS",payload:{inProgress:true,id}});
+            const response = await ApiService.delete(`vacantposition/${id}`);
+            setTimeout(() => dispatch({type: "SET_NEW_PROFILE_POSITIONS",payload:id}),1500);
         } catch (e) {
             console.log(e);
         }
         finally{
-            setTimeout(() => dispatch({type: "SET_LOADING_PROFILE_IMAGE",payload: false}),1500);
+            setTimeout(() => dispatch({type: "SET_DELETE_POSITION_IN_PROGRESS",payload: {inProgress:false,id: undefined}}),1000);
         }
     }
 }
+
+

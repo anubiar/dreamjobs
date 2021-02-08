@@ -15,6 +15,11 @@ import Footer from "../components/footer/Footer";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import CreateEmployerProfile from "../components/profile/createEmployerProfile";
 import { PostVacantPositionForm } from "../components/vacantPosition/positionItemCreate";
+import MyJobsEmployerProfileScreen from "../screens/profile/MyJobsEmployerProfile";
+import PositionDetailsScreen from "../screens/positions/positionsDetailsScreen";
+import CreateEmployeeProfile from "../components/profile/createEmployeeProfile";
+import CreateEmployeeProfileV2 from "../components/profile/createEmployeeProfileV2";
+import Screen from "../components/profile/testWizard";
 
 
 const Navigation = ({history} : any) => {
@@ -79,7 +84,7 @@ const Navigation = ({history} : any) => {
 
                         <Route exact path={"/addJob"} render={
                             () => (
-                                existEmployerProfile
+                                !existEmployerProfile
                                 ?
                                 <Redirect to={'/createHireProfile'}/>
                                 :
@@ -90,6 +95,43 @@ const Navigation = ({history} : any) => {
                                 </>
                             )
                         }/>
+
+
+                        <Route exact path={"/myJobs"} render={
+                            () => (
+                                !existEmployerProfile
+                                ?
+                                <Redirect to={'/createHireProfile'}/>
+                                :
+                                <>
+                                <NavBar/>
+                                <Route component={MyJobsEmployerProfileScreen}/>
+                                <Footer/>
+                                </>
+                            )
+                        }/>
+
+                        <Route path={"/positions"} render={
+                            () => (
+                                <>
+                                    <NavBar/>
+                                    <PositionDetailsScreen/>
+                                    <Footer/>
+                                </>
+                            )
+                        }/>
+
+                        <Route exact path={"/createJobProfile"} render={()=>(
+                            existEmployeeProfile
+                            ?
+                            <Redirect to={"/"}/>
+                            :
+                            <>
+                            {/* <Route component={CreateEmployeeProfile}/> */}
+                            <Route component={CreateEmployeeProfileV2}/>
+                            {/* <Route component={Screen}/> */}
+                            </>
+                        )}/>
 
                         {/* <Route exact path={'creteJobProfile'} render={()=>(
                             existEmployeeProfile

@@ -10,7 +10,7 @@ import PositionItem from "../../components/vacantPosition/positionItem";
 import EditProfile from "../profile/EditProfile";
 import { Container, Grid } from "@material-ui/core";
 import PositionItemList from "../../components/vacantPosition/positionItemList";
-import { onExistEmployerProfile, onGetEmployerImageProfile, onGetEmployerProfileData } from "../../redux/actions/profileEmployerActions";
+import { onExistEmployerProfile, onGetEmployerProfileData } from "../../redux/actions/profileEmployerActions";
 import { onExistEmployeeProfile } from "../../redux/actions/profileEmployeeActions";
 import Config from "../../config/config";
 
@@ -23,9 +23,8 @@ const Main = () => {
 
     useEffect( () => { 
        (async () => {dispatch(onGetPositionsMain());
-        dispatch(onExistEmployerProfile());
+        await dispatch(onExistEmployerProfile());
         dispatch(onExistEmployeeProfile());
-        await dispatch(onGetEmployerProfileData());
     })()
         
     },[])

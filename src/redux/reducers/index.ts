@@ -8,6 +8,7 @@ import { PositionReducer } from "./positionReducer";
 import { ProfileEmployerReducer } from "./profileEmployerReducers";
 
 
+
 const appReducer  = combineReducers({
     authReducer : AuthReducer,
     generalReducers : GeneralReducer,

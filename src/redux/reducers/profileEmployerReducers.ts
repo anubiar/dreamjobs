@@ -4,9 +4,8 @@ import {EmployerProfileActions} from '../actions/profileEmployerActions';
 
 type EmployerProfileState = {
     inProgress: boolean,
-    inProgressProfileImage: boolean,
     nameCompany : string,
-    id: number,
+    id: number | undefined,
     email : string,
     companyPhone: string,
     companyAdress: string,
@@ -14,13 +13,15 @@ type EmployerProfileState = {
     positions : any[],
     imagePath : string | undefined,
     existEmployerProfile : boolean,
-    profileImage: any
+    formId : number | undefined,
+    inProgressDeleting: boolean,
+    deletingPositionId: number | undefined
 }
 
 const initialState ={
     inProgress : false,
     nameCompany: '',
-    id: 0,
+    id: undefined,
     email: '',
     companyPhone: '',
     companyAdress: '',
@@ -28,8 +29,9 @@ const initialState ={
     imagePath: undefined,
     positions: [],
     existEmployerProfile: false,
-    inProgressProfileImage : false,
-    profileImage: undefined
+    formId: 0,
+    inProgressDeleting: false,
+    deletingPositionId: undefined
 }
 
 const ProfileEmployerReducer = (state : EmployerProfileState = initialState,action : EmployerProfileActions) =>{
@@ -43,7 +45,9 @@ const ProfileEmployerReducer = (state : EmployerProfileState = initialState,acti
                 companyAdress: action.payload.profile.companyAdress,
                 companyPhone: action.payload.profile.companyPhone,
                 fiscalCode: action.payload.profile.codFiscal,
-                imagePath: action.payload.profile.imagePath
+                imagePath: action.payload.profile.imagePath,
+                formId : action.payload.profile.formId,
+                positions: action.payload.positions
             }
         case  "SET_EMPLOYER_PROFILE_IN_PROGRESS":
             return{
@@ -56,21 +60,22 @@ const ProfileEmployerReducer = (state : EmployerProfileState = initialState,acti
                 ...state,
                 existEmployerProfile: action.payload
             }
-        case "SET_LOADING_PROFILE_IMAGE":
+        case "SET_DELETE_POSITION_IN_PROGRESS":
             return{
                 ...state,
-                inProgressProfileImage: action.payload
+                inProgressDeleting: action.payload.inProgress,
+                deletingPositionId: action.payload.id
             }
-        case "GET_EMPLOYER_PROFILE_IMAGE":
+        case "SET_NEW_PROFILE_POSITIONS":
             return{
                 ...state,
-                profileImage: action.payload
+                positions: state.positions.filter(el => el.vacantPositionId !== action.payload)
             }
         
+        
         default:
-            return{
-                ...state
-            }
+            return state
+            
     }
 }
 

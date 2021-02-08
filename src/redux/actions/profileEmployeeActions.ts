@@ -74,3 +74,22 @@ export const onUpdateProfile = (values : any) => {
         }
     }
 }
+
+export const onCreateProfile = (values : any) => {
+    return async(dispatch : Dispatch<EmployeeProfileActions>) =>{
+        try {
+            dispatch({type:'SET_EMPLOYEE_PROFILE_IN_PROGRESS',payload:true})
+            const formData = createUpdateEmployeeProfileFormData(values)
+            console.log(values)
+            console.log(formData);
+            const response = await ApiService.postFormData('employee',formData)
+            console.log(response)
+        }
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+            setTimeout(() =>dispatch({type:'SET_EMPLOYEE_PROFILE_IN_PROGRESS',payload:false}),1500)
+        }
+    }
+}
